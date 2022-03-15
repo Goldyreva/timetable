@@ -6,6 +6,11 @@
 }
 body, html{
     background-color: #333333 !important;
+    height: 100%;
+}
+body{
+    display: flex;
+    flex-direction: column;
 }
 a, p, button, input, label{
     font-family: 'Ubuntu', sans-serif;
@@ -32,11 +37,12 @@ h5{
 }
 main{
     margin: 0 auto;
+    flex-grow: 1;
 }
 /* Панель навигации с кнопками */
 .nav-a{
     text-decoration: none;
-    min-width: 400px;
+    /* min-width: 400px; */
     border: 4px dashed white;
     text-align: center;
     padding: 15px 0;
@@ -51,7 +57,7 @@ main{
 
 /* Подвал */
 footer .icon-container{
-        width: 5vw;
+    width: 5vw;
 }
 footer .icon-container i{
     color: white;
@@ -104,5 +110,8 @@ footer .icon-container i:hover{
 }
 .auth-btn:active{
     background: linear-gradient(#64498d,#785aa6);
+}
+.modal-header, .modal-footer{
+    border-color: #785aa6;
 }
 /* Поп-ап окно авторизации */
