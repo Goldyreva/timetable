@@ -1,0 +1,16 @@
+header, .categorii{
+    margin: 30px;
+}
+.btn-primary {
+    color: #fff;
+    background-color: #785aa6;
+    border-color: #785aa6;
+    transition: all 0.2s ease-out;
+}
+.btn-primary:hover{
+    background-color: #5c4480;
+    border-color: #5c4480;
+}
+.table, .tbody{
+    color: #fff;
+}
