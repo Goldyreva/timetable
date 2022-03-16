@@ -32,6 +32,13 @@ h2, h3, h4, h5{
 h2{
     font-size: 2rem;
 }
+h4{
+    text-align: right;
+}
+h4 span{
+    color: #8ec542;
+    font-size: 2.4rem;
+}
 h5{
     font-size: 1.6rem;
 }

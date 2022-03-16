@@ -1,0 +1,34 @@
+
+div.table {
+    display: table;
+    width: 100px;
+    background-color: lightblue;
+    border-collapse: collapse;
+    border: 1px solid red;
+  }
+  
+  div.row {
+    display: table-row;
+  }
+  
+  div.cell {
+    display: table-cell;
+    border: 1px solid red;
+  }
+  
+  div.colspan,
+  div.colspan+div.cell {
+    border: 0;
+  }
+  
+  div.colspan>div {
+    /* width: 1px; */
+  }
+  
+  div.colspan>div>div {
+    /* position: relative;
+    width: 99px;
+    overflow: hidden; */
+    display: flex;
+    flex-direction: column;
+  }
