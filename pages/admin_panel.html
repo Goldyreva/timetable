@@ -66,6 +66,39 @@
     </div>
     <div id="categorii" class="categorii my-5">
         <h2>Пользователи</h2>
+         <!-- изменили стиль кнопки -->
+         <button type="button" class="btn btn-success" data-bs-toggle="modal"
+         data-bs-target="#categoryModal">
+         Добавить подразделение
+     </button>
+     <!-- модальное окно добавления категории -->
+     <div class="modal fade" tabindex="-1" id="categoryModal">
+         <div class="modal-dialog">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title">Добавить подразделение</h5>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal"
+                         aria-label="Close"></button>
+                 </div>
+                 <div class="modal-body">
+                     <form action="" method="post" class="d-flex flex-column  auth-form">
+                         <div class="row">
+                             <div class="col">
+                                 <input type="text"  class="w-100" 
+                                     placeholder="Школа №1"
+                                     aria-label="Добавить подразделение" />
+                             </div>
+                         </div>
+                     </form>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" class="btn auth-btn">
+                         Сохранить
+                     </button>
+                 </div>
+             </div>
+         </div>
+     </div>
         <table class="table">
             <!-- вставили таблицу -->
             <thead>
