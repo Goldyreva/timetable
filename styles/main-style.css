@@ -122,3 +122,6 @@ footer .icon-container i:hover{
     border-color: #785aa6;
 }
 /* Поп-ап окно авторизации */
+.table, .tbody{
+    color: #fff;
+}

@@ -19,8 +19,9 @@
         <button type="button" class="btn btn-success" class="btn btn-primary btn-lg btn-block" class="" data-bs-toggle="modal" data-bs-target="#auth">Зарегистрировать пользователя</button>
     </div>
     <div>
-        <button type="button" class="btn btn-secondary">Выход</button>
-    </div>
+        <form action="/php/exit.php">
+        <button type="submit" class="btn btn-secondary" >Выход</button>
+    </form></div>
     </header>
     <div class="modal fade" id="auth" tabindex="-1" aria-labelledby="authLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -30,40 +31,41 @@
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="" class="d-flex flex-column align-items-start auth-form">
+                <form action="/php/check-reg.php" method="POST" class="d-flex flex-column align-items-start auth-form">
                     <label for="name">Имя:</label>
-                    <input type="name" name="name" class="w-100" placeholder="Елизавета">
+                    <input type="name" name="firstname" class="w-100" placeholder="Елизавета">
                     <label for="surname">Фамилия:</label>
-                    <input type="surname" name="surname" class="w-100" placeholder="Голдырева">
+                    <input type="surname" name="secondname" class="w-100" placeholder="Голдырева">
                     <label for="patronymic">Отчество:</label>
                     <input type="patronymic" name="patronymic" class="w-100" placeholder="Алексеевна">
                     <label for="email">E-mail:</label>
                     <input type="email" name="email" class="w-100" placeholder="Example@mail.ru">
                     <label for="password">Пароль:</label>
                     <input type="password" name="password" class="w-100" placeholder="********">
-                    <div class="btn-group d-flex flex-column w-100" data-toggle="buttons">
-                        <label for="checkbox">Выбрать подразделение:</label>
+                    <div class="btn-group d-flex flex-column w-100" data-toggle="buttons" name="departament_id">
+                        <label for="checkbox" >Выбрать подразделение:</label>
+                        <?php 
+                        include "../php/database.php";
+                        $result = $mysql->query("SELECT * FROM `departament` ");
+                        $result = $result -> fetch_all();
+                        foreach ($result as $dep){
+                            ?> 
                         <label class="btn btn-primary m-2">
-                        <input type="checkbox"> Школа №1</label>
-                        <label class="btn btn-primary m-2">
-                        <input type="checkbox"> Школа №1</label>
-                        <label class="btn btn-primary m-2">
-                        <input type="checkbox"> Школа №1</label>
-                        <label class="btn btn-primary m-2">
-                        <input type="checkbox"> Школа №1</label>
-                        <label class="btn btn-primary m-2">
-                        <input type="checkbox"> Школа №1</label>
-                        <label class="btn btn-primary m-2">
-                        <input type="checkbox"> Школа №1</label>
+                        <input type="checkbox" name="dep_id[]" value="<?= $dep[0];?>"> <?= $dep[1];?></label>
+                        <?php
+                        }
+
+                        ?>
+                        
                     </div>
-                </form>
+                
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn auth-btn">Зарегистрировать</button>
+            <button type="submit" class="btn auth-btn">Зарегистрировать</button>
             </div>
         </div>
         </div>
-    </div>
+    </div></form>
     <div id="categorii" class="categorii my-5">
         <h2>Пользователи</h2>
          <!-- изменили стиль кнопки -->
@@ -81,26 +83,32 @@
                          aria-label="Close"></button>
                  </div>
                  <div class="modal-body">
-                     <form action="" method="post" class="d-flex flex-column  auth-form">
+                     <form action="/php/check-departament.php" method="post" class="d-flex flex-column  auth-form">
                          <div class="row">
                              <div class="col">
-                                 <input type="text"  class="w-100" 
-                                     placeholder="Школа №1"
-                                     aria-label="Добавить подразделение" />
+                                 <input type="text" class="w-100" name="name" placeholder="Школа №1" aria-label="Добавить подразделение" />
                              </div>
+                             
                          </div>
-                     </form>
+                         <br>
+                         <select class="form-control" name="type">
+                            <option value="CПО">СПО</option>
+                            <option value="Школа">Школа</option>
+                            <option value="ДС">Дет. сад</option>
+                          </select>
+                    
                  </div>
                  <div class="modal-footer">
-                     <button type="button" class="btn auth-btn">
+                     <button type="submit" class="btn auth-btn">
                          Сохранить
                      </button>
                  </div>
              </div>
          </div>
-     </div>
+     </div> </form>
         <table class="table">
             <!-- вставили таблицу -->
+           
             <thead>
                 <tr>
                   <th scope="col">ID</th>
@@ -111,39 +119,48 @@
 
                 </tr>
               </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Елизавета</td>
-                    <td>Голдырева</td>
-                    <td>Алексеевна</td>
-                    <td>Школа №1</td>
-                    <td class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button type="button" class="btn btn-danger">
-                            Удалить подразделение 
-                        </button>
+            <tbody> 
+                <?php
+             $result_user = $mysql->query("SELECT * FROM `users` WHERE NOT `role_id` = 1 ");
+             $result_user = $result_user -> fetch_all();
+             foreach ($result_user as $user){
+            ?>
+            <tr>
+                    <th scope="row"> <?= $user[0];?></th>
+                    <td><?= $user[1];?></td>
+                    <td><?= $user[2];?></td>
+                    <td><?= $user[3];?></td>
+                    <?php
+                    // $dep_user = $mysql ->query("SELECT `departament_id` FROM `user-departament` LEFT JOIN `users` ON (users.id = `user-departament`.user_id) WHERE users.id = '$user[0]' ");
+                    $dep_user = $mysql ->query("SELECT `name` FROM `departament` LEFT JOIN `user-departament` ON (`departament`.`id` = `user-departament`.`departament_id`) WHERE `user-departament`.`user_id` = '$user[0]' ");
+                    $dep_user = $dep_user -> fetch_all();
+                    
+                    
+                    ?>
+                    <td><?php
+                    foreach($dep_user as $dep_name){
+                        echo $dep_name[0];
+
+                    ?>
+                    <!-- <form action="../php/delete.php" method="POST"> -->
+                    <input type="hidden" value="<?= $dep_user[2]?>" name="departament_id">
+                    <button type="button" class="btn btn-danger m-2" >-</button><br>
+                    <!-- </form> -->
+                    <?php
+                    }
+                    ?> </td>
+                    <td class=" ">
+                       
                         <button type="button" class="btn btn-dark" data-bs-toggle="modal"
                         data-bs-target="#katModaladd">
-                        Редактировать подразделение
+                        Редактировать подразделения
                     </button>
                     </td>
                 </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Василиса</td>
-                    <td>Якушева</td>
-                    <td>Викторовна</td>
-                    <td>Школа №2</td>
-                    <td class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button type="button" class="btn btn-danger">
-                            Удалить подразделение
-                        </button>
-                        <button type="button" class="btn btn-dark" data-bs-toggle="modal"
-                        data-bs-target="#katModaladd">
-                        Редактировать подразделение
-                    </button>
-                    </td>
-                </tr>
+            <?php
+             }
+            ?>
+                
                 
             </tbody>
         </table>
@@ -168,18 +185,18 @@
                                           </select> -->
                                         <div class="btn-group d-flex flex-column w-100" data-toggle="buttons">
                                             <label for="checkbox">Выбрать подразделение:</label>
-                                            <label class="btn btn-primary m-2">
-                                            <input type="checkbox"> Школа №1</label>
-                                            <label class="btn btn-primary m-2">
-                                            <input type="checkbox"> Школа №1</label>
-                                            <label class="btn btn-primary m-2">
-                                            <input type="checkbox"> Школа №1</label>
-                                            <label class="btn btn-primary m-2">
-                                            <input type="checkbox"> Школа №1</label>
-                                            <label class="btn btn-primary m-2">
-                                            <input type="checkbox"> Школа №1</label>
-                                            <label class="btn btn-primary m-2">
-                                            <input type="checkbox"> Школа №1</label>
+                                            <?php 
+                        include "../php/database.php";
+                        $result = $mysql->query("SELECT * FROM `departament` ");
+                        $result = $result -> fetch_all();
+                        foreach ($result as $dep){
+                            ?> 
+                        <label class="btn btn-primary m-2">
+                        <input type="checkbox" name="dep_id[]" value="<?= $dep[0];?>"> <?= $dep[1];?></label>
+                        <?php
+                        }
+
+                        ?>
                                         </div>
                                     </form>
                                 
