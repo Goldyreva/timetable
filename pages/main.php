@@ -10,12 +10,17 @@
     <title>ПМОК</title>
 </head>
 <body>
-    <p>
-        <?php
-// echo $_GET['thisDepId'];
-        ?>
-    </p>
+<?php
+        include '../php/database.php';
+        $thisDepId = $_GET['thisDepId'];
+        $result2 = $mysql->query("SELECT * FROM `departament` WHERE `id` = '$thisDepId'");
+        $result2 = $result2 -> fetch_all();
+    ?>
     <main class="d-flex flex-column align-items-center w-75">
+    <header class="d-flex flex-row justify-content-between align-items-center w-100 px-2">
+            <a href="/index.php" class="nav-a px-3 d-flex align-items-center"> <i class="fa-solid fa-caret-left pe-2 fs-1"></i> Назад</a>
+            <h4 class="pe-3"><?=$result2[0][1] ?></h4>
+        </header>
         <header class="d-flex flex-column align-items-center w-100">
             <a href="/index.php">
             <img src="/images/logo.png" alt="logo"></a>

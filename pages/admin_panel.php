@@ -70,6 +70,8 @@
         </div>
     </div>
     </form>
+
+    
 <!-- Модальное окно для добавления таблицы -->
 <div class="modal fade" id="addTable" tabindex="-1" aria-labelledby="addTableLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -79,6 +81,7 @@
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                
                 <form action="/php/excel-add.php" method="POST" class="d-flex flex-column align-items-start auth-form" enctype="multipart/form-data">
                     <div class="btn-group d-flex flex-column w-100" data-toggle="buttons" name="departament_id">
                         <label for="select_group" >Выбрать класс/группу:</label>
@@ -259,4 +262,5 @@
 </body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/cc824b8f17.js" crossorigin="anonymous"></script>
+    <script src="/script/enter-dep.js"></script>
 </html>

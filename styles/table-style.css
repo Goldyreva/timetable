@@ -1,4 +1,4 @@
-
+/* 
 div.table {
     display: table;
     width: 100px;
@@ -23,12 +23,16 @@ div.table {
   
   div.colspan>div {
     /* width: 1px; */
-  }
+  /* }
   
   div.colspan>div>div {
-    /* position: relative;
+  position: relative;
     width: 99px;
-    overflow: hidden; */
+    overflow: hidden; 
     display: flex;
     flex-direction: column;
-  }
+  }  */
+table.timetable{
+  width: 99%;
+  margin: 0 auto;
+}

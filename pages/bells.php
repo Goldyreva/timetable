@@ -12,7 +12,7 @@
 <body>
     <main class="d-flex flex-column w-75">
         <header class="d-flex flex-row justify-content-between align-items-center w-100 px-2">
-            <a href="/pages/main.php" class="nav-a px-3 d-flex align-items-center"> <i class="fa-solid fa-caret-left pe-2 fs-1"></i> Назад</a>
+            <a href="/pages/main.php?thisDepId=<?=$_GET['thisDepId']?>" class="nav-a px-3 d-flex align-items-center"> <i class="fa-solid fa-caret-left pe-2 fs-1"></i> Назад</a>
             <h4 class="pe-3">РАСПИСАНИЕ ЗВОНКОВ</h4>
         </header>
         <div class="table-container">
