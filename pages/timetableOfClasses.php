@@ -11,19 +11,34 @@
     <title>ПМОК</title>
 </head>
 <body>
-    <main class="d-flex flex-column align-items-center w-75">
+<?php
+include "../php/database.php";
+$groupId = $_GET['thisGroupId'];
+$thisDepId = $_GET['thisDepId'];
+$result = $mysql->query("SELECT * FROM `groups` WHERE `id` = '$groupId'");
+$result = $result -> fetch_all();
+
+$result2 = $mysql->query("SELECT * FROM `departament` WHERE `id` = '$thisDepId'");
+$result2 = $result2 -> fetch_all();
+
+?>
+    <main class="d-flex flex-column align-items-center">
         <header class="d-flex flex-row justify-content-between align-items-center w-100 px-2">
-            <a href="/pages/class.php" class="nav-a px-3 d-flex align-items-center"> <i class="fa-solid fa-caret-left pe-2 fs-1"></i> Назад</a>
-            <h4 class="pe-3">Школа №1 <br> <span>1a</span> </h4>
+            <a href="/pages/class.php?thisDepId=<?=$_GET['thisDepId']?>" class="nav-a px-3 d-flex align-items-center"> <i class="fa-solid fa-caret-left pe-2 fs-1"></i> Назад</a>
+            <h4 class="pe-3"><?=$result2[0][1] ?> <br> <span><?=$result[0][1] ?></span> </h4>
         </header>
         <section class="timetable w-100">
         <?php
-include "../php/database.php";
-$resultTable = $mysql->query("SELECT `link` FROM `timetables` WHERE `group_id` = '1'");
+
+$resultTable = $mysql->query("SELECT `link` FROM `timetables` WHERE `group_id` = '$groupId'");
 $resultTable = $resultTable -> fetch_assoc();
 // $resultTable = $resultTable[link];
 // print_r( $resultTable);
 // exit();
+if(empty($resultTable)){
+  echo '<p color="white"> Расписание не доступно </p>';
+}else{
+
 
 require_once $path = $_SERVER['DOCUMENT_ROOT'] . '/PHPExcel.php';
 
@@ -44,7 +59,7 @@ function strpos_arr($haystack, $needle) {
 
 echo '<br>';
 foreach($lists as $list){
-    echo '<table class="table table-dark m-0 table-striped timetable table-bordered table-responsive w-100">';
+    echo '<table class="table table-dark m-0 table-striped timetable table-bordered table-responsive">';
     echo '<tbody>';
     // Перебор строк
     foreach($list as $row){
@@ -73,9 +88,6 @@ foreach($lists as $list){
         
 
       // Перебор столбцов
-    //   for($i = 1; $i<=count($row); $i++){
-    //     echo '<td aria-label="'. $days[$i] .'">'.$row[$i].'</td>';
-    // }
       foreach($row as $col){
         echo '<td>'.$col.'</td>';
     }
@@ -84,6 +96,8 @@ foreach($lists as $list){
     echo '</tbody>';
     echo '</table>';
    }
+
+  }
 ?>
 
 

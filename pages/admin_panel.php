@@ -131,7 +131,7 @@
         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#categoryModal1">
             Добавить классы/группы
         </button>
-        <!-- модальное окно добавления категории -->
+
         <div class="modal fade" tabindex="-1" id="categoryModal">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -191,10 +191,8 @@
                             <label class="btn btn-primary m-2">
                                 <input type="checkbox" name="dep_id[]" value="<?= $dep[0];?>"> <?= $dep[1];?></label>
                             <?php
-                        }
-
-                        ?>
-
+                            }
+                            ?>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn auth-btn">
@@ -268,8 +266,6 @@
                 <?php
              }
             ?>
-
-
             </tbody>
         </table>
     </div>
@@ -284,12 +280,9 @@
                     <form action="" method="post">
                         <div class="row">
                             <div class="col">
-                                <form action="../php/editing.php" method="POST" class="d-flex flex-column align-items-start auth-form">
-                                    <!-- <label for="admin"></label>
-                                        <select class="form-control">
-                                            <option>Елизавета Алексеевна Голдырева</option>
-                                            <option>Василиса Викторовна Якушева</option>
-                                          </select> -->
+                                <form action="../php/editing.php" method="POST"
+                                    class="d-flex flex-column align-items-start auth-form">
+
                                     <div class="btn-group d-flex flex-column w-100" data-toggle="buttons">
                                         <label for="checkbox">Выбрать подразделение:</label>
 
@@ -307,18 +300,18 @@
                                             }
 
                                             ?><div class="modal-footer">
-                    <button type="submit" class="btn auth-btn">Сохранить</button>
-                </div>
+                                            <button type="submit" class="btn auth-btn">Сохранить</button>
+                                        </div>
                                     </div>
-</form>
+                                </form>
 
                             </div>
                         </div>
 
                 </div>
-                
+
             </div>
-            
+
         </div>
     </div>
 </body>

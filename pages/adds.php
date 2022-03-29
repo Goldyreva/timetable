@@ -11,7 +11,7 @@
 </head>
 <body>
     <header class="d-flex flex-row justify-content-between align-items-center w-75 px-2 mx-auto">
-        <a href="/pages/main.php" class="nav-a px-3 d-flex align-items-center"> <i class="fa-solid fa-caret-left pe-2 fs-1"></i> Назад</a>
+        <a href="/pages/main.php?thisDepId=<?=$_GET['thisDepId']?>" class="nav-a px-3 d-flex align-items-center"> <i class="fa-solid fa-caret-left pe-2 fs-1"></i> Назад</a>
         <h4 class="pe-3">ОБЪЯВЛЕНИЯ</h4>
     </header>
 
