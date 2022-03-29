@@ -229,26 +229,24 @@
                     <td><?= $user[3];?></td>
                     <?php
                     // $dep_user = $mysql ->query("SELECT `departament_id` FROM `user-departament` LEFT JOIN `users` ON (users.id = `user-departament`.user_id) WHERE users.id = '$user[0]' ");
-                    $dep_user = $mysql ->query("SELECT `name` FROM `departament` LEFT JOIN `user-departament` ON (`departament`.`id` = `user-departament`.`departament_id`) WHERE `user-departament`.`user_id` = '$user[0]' ");
+                    $dep_user = $mysql ->query("SELECT * FROM `departament` LEFT JOIN `user-departament` ON (`departament`.`id` = `user-departament`.`departament_id`) WHERE `user-departament`.`user_id` = '$user[0]' ");
                     $dep_user = $dep_user -> fetch_all();
                     
                     
                     ?>
                     <td><?php
+                    // $del = $mysql ->query( "SELECT * FROM `user-departament`");
+                    // $del = $del -> fetch_all();
+                    // print_r($del);
                     foreach($dep_user as $dep_name){
-                        echo $dep_name[0];
+                        echo $dep_name[1];
 
                     ?>
-                        <?php
-                    $del = $mysql ->query( "SELECT * FROM `user-departament`");
-                    $del = $del -> fetch_all();
-                    foreach ($del as $del) {
-                    ?>
-
                         <form action="../php/delete.php" method="POST">
-                            <input type="hidden" value="<?= $del[0]?>" name="departament_id">
+                            <input type="hidden" value="<?= $user[0]?>" name="user_id">
+                            <input type="hidden" value="<?= $dep_name[0]?>" name="departament_id">
                             <?php
-                            }
+                            // }
                             echo '<input type="submit" class="btn btn-danger m-2" " value="-" onclick="if(confirm(\'Вы действительно хотите удалить это подразделение?\'))submit();else return false;">';
                             ?>
                         </form>
@@ -258,22 +256,86 @@
                     </td>
                     <td class=" ">
 
-                        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#katModaladd">
-                            Редактировать подразделения
+                        <button type="button" class="btn btn-dark" data-bs-toggle="modal"
+                            data-bs-target="#katModaladd<?= $user[0]?>">
+                            Добавление подразделения
                         </button>
                     </td>
                 </tr>
+
+
+                <div class="modal fade" tabindex="-1" id="katModaladd<?= $user[0]?>">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Редактирование подразделений</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="" method="post">
+                                    <div class="row">
+                                        <div class="col">
+                                            <form action="../php/editing.php" method="POST"
+                                                class="d-flex flex-column align-items-start auth-form">
+
+                                                <div class="btn-group d-flex flex-column w-100" data-toggle="buttons">
+                                                    <label for="checkbox">Выбрать подразделение:</label>
+
+                                                    <?php 
+                                            // $result = $mysql->query("SELECT * FROM `departament` ");
+                                            $result = $mysql ->query("SELECT * FROM `departament` LEFT JOIN `user-departament` ON (`departament`.`id` = `user-departament`.`departament_id`) WHERE `user-departament`.`user_id` = '$user[0]' ");
+                                            $notUserDep = '';
+                                            $result = $result -> fetch_all();
+                                            
+                                            foreach($result as $r){
+                                                $notUserDep .= "'" . $r[0] . "',";
+                                                
+                                            }
+                                            $notUserDep = substr($notUserDep,0,-1);;
+                                            echo $notUserDep . '<br>';
+                                                // echo $r[0];
+                                                // $result2 = $mysql->query("SELECT * FROM `departament` WHERE  `id` NOT IN ($notUserDep)");
+                                                // $result2 = $result2 -> fetch_all();
+                                                // print_r($result2);
+                                            
+                                            // echo $user[0];
+                                            // print_r($user);
+                                            // print_r($result);
+                                            foreach ($result as $dep){
+                                                ?>
+
+                                                    <label class="btn btn-primary m-2">
+                                                        <input type="checkbox" name="dep_id[]" value="<?= $dep[0];?>">
+                                                        <?= $dep[1];?></label>
+                                                    <?php
+                                            }
+
+                                            ?><div class="modal-footer">
+                                                        <button type="submit" class="btn auth-btn">Сохранить</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
                 <?php
              }
             ?>
             </tbody>
         </table>
     </div>
-    <div class="modal fade" tabindex="-1" id="katModaladd">
+    <!-- <div class="modal fade" tabindex="-1" id="katModaladd">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Редактирование категорий</h5>
+                    <h5 class="modal-title">Редактирование подразделений</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -313,7 +375,7 @@
             </div>
 
         </div>
-    </div>
+    </div> -->
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
