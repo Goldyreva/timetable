@@ -91,7 +91,7 @@
                         
                             ?> 
                         
-                            <select name="group_id" id="select_group">
+                            <select  class="form-control" name="group_id" id="select_group">
                                 <?php
                                     foreach ($result as $group){
                                 ?>
@@ -100,7 +100,7 @@
                         }
 
                         ?>
-                            </select>
+                            </select><br>
                       
                         
                         <input type="file" name="excel">
@@ -121,6 +121,10 @@
          <button type="button" class="btn btn-success" data-bs-toggle="modal"
          data-bs-target="#categoryModal">
          Добавить подразделение
+     </button>
+     <button type="button" class="btn btn-success" data-bs-toggle="modal"
+         data-bs-target="#categoryModal1">
+         Добавить классы/группы
      </button>
      <!-- модальное окно добавления категории -->
      <div class="modal fade" tabindex="-1" id="categoryModal">
@@ -145,6 +149,45 @@
                             <option value="Школа">Школа</option>
                             <option value="ДС">Дет. сад</option>
                           </select>
+                    
+                 </div>
+                 <div class="modal-footer">
+                     <button type="submit" class="btn auth-btn">
+                         Сохранить
+                     </button>
+                 </div>
+             </div>
+         </div>
+     </div> </form>
+     <div class="modal fade" tabindex="-1" id="categoryModal1">
+         <div class="modal-dialog">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title">Добавить классы/группы</h5>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal"
+                         aria-label="Close"></button>
+                 </div>
+                 <div class="modal-body">
+                     <form action="/php/check-groups.php" method="post" class="d-flex flex-column  auth-form">
+                         <div class="row">
+                             <div class="col">
+                                 <input type="text" class="w-100" name="name" placeholder="1-А" aria-label="Добавить классы/группы" />
+                             </div>
+                             
+                         </div>
+                         <br>
+                         <?php 
+                        include "../php/database.php";
+                        $result = $mysql->query("SELECT * FROM `departament` ");
+                        $result = $result -> fetch_all();
+                        foreach ($result as $dep){
+                            ?> 
+                        <label class="btn btn-primary m-2">
+                        <input type="checkbox" name="dep_id[]" value="<?= $dep[0];?>"> <?= $dep[1];?></label>
+                        <?php
+                        }
+
+                        ?>
                     
                  </div>
                  <div class="modal-footer">
@@ -191,10 +234,20 @@
                         echo $dep_name[0];
 
                     ?>
-                    <!-- <form action="../php/delete.php" method="POST"> -->
-                    <input type="hidden" value="<?= $dep_user[2]?>" name="departament_id">
-                    <button type="button" class="btn btn-danger m-2" >-</button><br>
-                    <!-- </form> -->
+                    <?php
+                    $del = $mysql ->query( "SELECT * FROM `user-departament`");
+                    $del = $del -> fetch_all();
+                    foreach ($del as $del) {
+                    ?>
+                    
+                    <form action="../php/delete.php" method="POST">
+                    <input type="hidden" value="<?= $del[0]?>" name="departament_id">
+                   
+                    <button type="submit" class="btn btn-danger m-2" >-</button><br>
+                     <?php
+                    }
+                    ?>
+                    </form>
                     <?php
                     }
                     ?> </td>
