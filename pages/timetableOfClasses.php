@@ -59,13 +59,26 @@ function strpos_arr($haystack, $needle) {
 
 echo '<br>';
 foreach($lists as $list){
-    echo '<table class="table table-dark m-0 table-striped timetable table-bordered table-responsive">';
+    echo '<div class="table-responsive">';
+    echo '<table class="table table-dark m-0 table-striped timetable table-bordered">';
+    ?>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Пн</th>
+            <th>Вт</th>
+            <th>Ср</th>
+            <th>Чт</th>
+            <th>Пт</th>
+        </tr>
+    </thead>
+    <?php
     echo '<tbody>';
     // Перебор строк
     foreach($list as $row){
-
+        unset($row[0]);
       echo '<tr>';
-      unset($row[0]);
+      
 
         $c = 0;
         for($i=0; $i<=count($row); $i++){
@@ -80,12 +93,17 @@ foreach($lists as $list){
         }
 
         $month = ['мар', 'фев' , 'апр', 'май', 'янв', 'сен', 'окт', 'ноя', 'дек', 'июн', 'июл', 'авг'];
+        $days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'пн', 'вт', 'ср', 'чт', 'пт'];
         foreach($row as $r){
             if(strpos_arr($r, $month) == true){
                 array_splice($row, 0, count($row));
             }
         }
-        
+        foreach($row as $r){
+            if(strpos_arr($r, $days) == true){
+                array_splice($row, 0, count($row));
+            }
+        }
 
       // Перебор столбцов
       foreach($row as $col){
@@ -95,6 +113,7 @@ foreach($lists as $list){
     }
     echo '</tbody>';
     echo '</table>';
+    echo '</div>';
    }
 
   }
