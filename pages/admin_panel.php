@@ -102,7 +102,7 @@
                                 <?php
                                     foreach ($result as $dep){
                                 ?>
-                                <button type="button" class="btn btn-dark" data-bs-toggle="modal"
+                                <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal"
                             data-bs-target="#addTable2<?= $dep[0]?>"> <?= $dep[1]?></button>
                                 <!-- <option value="<?= $dep[0]?>"><?= $dep[1]?></option> -->
 <!-- </form> -->
@@ -142,7 +142,7 @@ foreach ($result2 as $dep){
                 </div>
                 <div class="modal-body">
                     <form action="/php/excel-add.php" method="POST"
-                        class="d-flex flex-column align-items-start auth-form" enctype="multipart/form-data" id="addTableForm">
+                        class="d-flex flex-column align-items-start" enctype="multipart/form-data" id="addTableForm">
                         <div class="btn-group d-flex flex-column w-100" data-toggle="buttons" name="departament_id">
                             <label for="select_group">Выбрать класс/группу:</label>
 
@@ -165,11 +165,11 @@ foreach ($result2 as $dep){
                             </select><br>
 
 
-                            <input type="file" name="excel">
+                            <input class="none" type="file" name="excel">
                         </div>
 
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer auth-form" >
                     <button type="submit" class="btn auth-btn">Добавить</button>
                 </div>
             </div>
@@ -197,11 +197,11 @@ foreach ($result2 as $dep){
                         <h5 class="modal-title">Добавить подразделение</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <form action="/php/check-departament.php" method="post" class="d-flex flex-column  auth-form">
+                    <div class="modal-body auth-form">
+                        <form action="/php/check-departament.php" method="post" class="d-flex flex-column auth-form">
                             <div class="row">
                                 <div class="col">
-                                    <input type="text" class="w-100" name="name" placeholder="Школа №1"
+                                    <input type="text" class="w-100 auth-form" name="name" placeholder="Школа №1"
                                         aria-label="Добавить подразделение" />
                                 </div>
 
@@ -301,7 +301,7 @@ foreach ($result2 as $dep){
 
                     ?>
                     <input type="button" class="btn btn-danger m-2" data-bs-toggle="modal"
-                            data-bs-target="#delModaladd<?= $user[0]?><?= $dep_name[0]?>" " value="-">
+                            data-bs-target="#delModaladd<?= $user[0]?><?= $dep_name[0]?>" value="-">
                        
                         <div class="modal fade" tabindex="-1" id="delModaladd<?= $user[0]?><?= $dep_name[0]?>">
                     <div class="modal-dialog">
@@ -315,7 +315,7 @@ foreach ($result2 as $dep){
                                     <div class="row">
                                         <div class="col">
                                             <form action="/php/delete.php" method="POST"
-                                                class="d-flex flex-column align-items-start auth-form">
+                                                class="d-flex  align-items-start auth-form">
 
                                                 <div class="btn-group d-flex flex-column w-100" data-toggle="buttons">
                                                     <label for="checkbox" class=" pb-3">Вы уверены, что хотите ограничить пользователю <?= $user[1]?> <?= $user[2]?> доступ к подразделению <?= $dep_name[1]?>?</label>
@@ -326,7 +326,7 @@ foreach ($result2 as $dep){
                                                         <button type="submit" class="btn auth-btn">Удалить</button>
                                                     </div>
                                                 </div>
-                                            </form>
+                                            </form><br>
 
                                         </div>
                                     </div>
@@ -388,7 +388,7 @@ foreach ($result2 as $dep){
                                                     ?>
 
                                                     <label class="btn btn-primary m-2">
-                                                        <input type="checkbox" name="dep_id[]"
+                                                        <input type="checkbox"  name="dep_id[]"
                                                             value="<?= $result['id'];?>">
                                                         <?= $result['name'];?></label>
                                                     
