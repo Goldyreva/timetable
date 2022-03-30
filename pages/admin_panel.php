@@ -23,7 +23,7 @@
                 data-bs-toggle="modal" data-bs-target="#auth">Зарегистрировать пользователя</button>
             <!-- Добавила кнопку для добавления таблицы -->
             <button type="button" class="btn btn-success" class="btn btn-primary btn-lg btn-block" class=""
-                data-bs-toggle="modal" data-bs-target="#addTable">Добавить расписание</button>
+                data-bs-toggle="modal" data-bs-target="#addTable1">Добавить расписание</button>
             <!-- Добавила кнопку для добавления таблицы -->
         </div>
         <div>
@@ -78,8 +78,61 @@
         </div>
     </div>
     </form>
+ <!-- Модальное окно для добавления таблицы -->
+ <div class="modal fade" id="addTable1" tabindex="-1" aria-labelledby="addTableLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addTableLabel">Добавить расписание</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- <form action="" method="POST"
+                        class="d-flex flex-column align-items-start auth-form" enctype="multipart/form-data"> -->
+                        <div class="btn-group d-flex flex-column w-100" data-toggle="buttons" name="departament_id">
+                            <label for="select_group">Выбрать подразделение:</label>
+                            <?php 
+                        $result = $mysql->query("SELECT * FROM `departament` ");
+                        $result = $result -> fetch_all();
+                        
+                            ?>
+
+                            <!-- <select class="form-control" name="group_id" id="select_dep"> -->
+                                <?php
+                                    foreach ($result as $dep){
+                                ?>
+                                <button type="button" class="btn btn-dark" data-bs-toggle="modal"
+                            data-bs-target="#addTable2<?= $dep[0]?>"> <?= $dep[1]?></button>
+                                <!-- <option value="<?= $dep[0]?>"><?= $dep[1]?></option> -->
+<!-- </form> -->
+                           
+
+    
+                            <!-- </select> -->
+                            <?php
+                        }
+
+                        ?>
+                        </div>
+
+                </div>
+                <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-success" class="btn auth-btn"
+                data-bs-toggle="modal" data-bs-target="#addTable2<?= $dep[0]?>" id="nextAddTable">Далее</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Модальное окно для добавления таблицы -->
-    <div class="modal fade" id="addTable" tabindex="-1" aria-labelledby="addTableLabel" aria-hidden="true">
+    </form>
+<?php
+$result2 = $mysql->query("SELECT * FROM `departament` ");
+$result2 = $result2 -> fetch_all();
+foreach ($result2 as $dep){
+?>
+        <!-- Модальное окно для добавления таблицы -->
+        <div class="modal fade" id="addTable2<?= $dep[0]?>" tabindex="-1" aria-labelledby="addTableLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -89,16 +142,18 @@
                 </div>
                 <div class="modal-body">
                     <form action="/php/excel-add.php" method="POST"
-                        class="d-flex flex-column align-items-start auth-form" enctype="multipart/form-data">
+                        class="d-flex flex-column align-items-start auth-form" enctype="multipart/form-data" id="addTableForm">
                         <div class="btn-group d-flex flex-column w-100" data-toggle="buttons" name="departament_id">
                             <label for="select_group">Выбрать класс/группу:</label>
+
+                            <!-- <input type="hidden" name="dep_id" value=""> -->
                             <?php 
-                        $result = $mysql->query("SELECT * FROM `groups` ");
+                        $result = $mysql->query("SELECT * FROM `groups` WHERE `departament_id` = '$dep[0]'");
                         $result = $result -> fetch_all();
                         
                             ?>
 
-                            <select class="form-control" name="group_id" id="select_group">
+                            <select class="form-control" name="group_id">
                                 <?php
                                     foreach ($result as $group){
                                 ?>
@@ -121,7 +176,10 @@
         </div>
     </div>
     <!-- Модальное окно для добавления таблицы -->
-    </form>
+<?php
+}
+?>
+    
     <div id="categorii" class="categorii my-5">
         <h2>Пользователи</h2>
         <!-- изменили стиль кнопки -->
@@ -409,5 +467,5 @@
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
 </script>
 <script src="https://kit.fontawesome.com/cc824b8f17.js" crossorigin="anonymous"></script>
-
+<script src="/scripts/enter-dep.js"></script>
 </html>
