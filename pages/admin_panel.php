@@ -273,45 +273,44 @@
                                     aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="" method="post">
                                     <div class="row">
                                         <div class="col">
-                                            <form action="../php/editing.php" method="POST"
+                                            <form action="/php/editing.php" method="POST"
                                                 class="d-flex flex-column align-items-start auth-form">
 
                                                 <div class="btn-group d-flex flex-column w-100" data-toggle="buttons">
                                                     <label for="checkbox">Выбрать подразделение:</label>
+                                                    <input type="hidden" name="user_id" value="<?= $user[0]?>">
 
                                                     <?php 
-                                            // $result = $mysql->query("SELECT * FROM `departament` ");
-                                            $result = $mysql ->query("SELECT * FROM `departament` LEFT JOIN `user-departament` ON (`departament`.`id` = `user-departament`.`departament_id`) WHERE `user-departament`.`user_id` = '$user[0]' ");
-                                            $notUserDep = '';
-                                            $result = $result -> fetch_all();
-                                            
-                                            foreach($result as $r){
-                                                $notUserDep .= "'" . $r[0] . "',";
-                                                
-                                            }
-                                            $notUserDep = substr($notUserDep,0,-1);;
-                                            echo $notUserDep . '<br>';
-                                                // echo $r[0];
-                                                // $result2 = $mysql->query("SELECT * FROM `departament` WHERE  `id` NOT IN ($notUserDep)");
-                                                // $result2 = $result2 -> fetch_all();
-                                                // print_r($result2);
-                                            
-                                            // echo $user[0];
-                                            // print_r($user);
-                                            // print_r($result);
-                                            foreach ($result as $dep){
-                                                ?>
+                                                $userDepId = $mysql ->query("SELECT `departament`.`id` FROM `departament` LEFT JOIN `user-departament` ON (`departament`.`id` = `user-departament`.`departament_id`) WHERE `user-departament`.`user_id` = '$user[0]' ");
+                                                $allDepId = $mysql->query("SELECT `departament`.`id` FROM `departament` ");
+                                                $userDepId = $userDepId -> fetch_all();
+                                                $allDepId = $allDepId -> fetch_all();
+
+                                                $notUserDep = array();
+
+                                                foreach($allDepId as $item){   
+                                                    if(!in_array($item,$userDepId)){   
+                                                    $notUserDep[] = $item;
+                                                    }
+                                                }
+                                                foreach ($notUserDep as $dep){
+                                                    $result = $mysql->query("SELECT * FROM `departament` WHERE `id` = $dep[0]");
+                                                    $result = $result-> fetch_assoc();
+                                                    ?>
 
                                                     <label class="btn btn-primary m-2">
-                                                        <input type="checkbox" name="dep_id[]" value="<?= $dep[0];?>">
-                                                        <?= $dep[1];?></label>
+                                                        <input type="checkbox" name="dep_id[]"
+                                                            value="<?= $result['id'];?>">
+                                                        <?= $result['name'];?></label>
+                                                    
                                                     <?php
-                                            }
+                                                }
 
-                                            ?><div class="modal-footer">
+                                            ?>
+                                            
+                                            <div class="modal-footer">
                                                         <button type="submit" class="btn auth-btn">Сохранить</button>
                                                     </div>
                                                 </div>
