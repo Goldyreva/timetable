@@ -242,15 +242,44 @@
                         echo $dep_name[1];
 
                     ?>
-                        <form action="../php/delete.php" method="POST">
-                            <input type="hidden" value="<?= $user[0]?>" name="user_id">
-                            <input type="hidden" value="<?= $dep_name[0]?>" name="departament_id">
-                            <?php
-                            // }
-                            echo '<input type="submit" class="btn btn-danger m-2" " value="-" onclick="if(confirm(\'Вы действительно хотите удалить это подразделение?\'))submit();else return false;">';
-                            ?>
-                        </form>
+                    <input type="button" class="btn btn-danger m-2" data-bs-toggle="modal"
+                            data-bs-target="#delModaladd<?= $user[0]?><?= $dep_name[0]?>" " value="-">
+                       
+                        <div class="modal fade" tabindex="-1" id="delModaladd<?= $user[0]?><?= $dep_name[0]?>">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <!-- <h5 class="modal-title">Редактирование подразделений</h5> -->
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col">
+                                            <form action="/php/delete.php" method="POST"
+                                                class="d-flex flex-column align-items-start auth-form">
+
+                                                <div class="btn-group d-flex flex-column w-100" data-toggle="buttons">
+                                                    <label for="checkbox" class=" pb-3">Вы уверены, что хотите ограничить пользователю <?= $user[1]?> <?= $user[2]?> доступ к подразделению <?= $dep_name[1]?>?</label>
+                                                  
+                                                    <input type="hidden" value="<?= $user[0]?>" name="user_id">
+                                                    <input type="hidden" value="<?= $dep_name[0]?>" name="departament_id">
+                                            <div class="modal-footer">
+                                                        <button type="submit" class="btn auth-btn">Удалить</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
                         <?php
+                        
                     }
                     ?>
                     </td>
