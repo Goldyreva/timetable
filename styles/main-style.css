@@ -12,13 +12,15 @@ body{
     display: flex;
     flex-direction: column;
 }
-a, p, button, input, label{
+a, p, button, input, label,textarea{
     font-family: 'Ubuntu', sans-serif;
     font-weight: 400;
     font-size: 1.4rem;
     color: white;
 }
-
+.form-control{
+    color: #fff !important;
+}
 h1{
     font-family: 'Ubuntu', sans-serif;
     font-weight: 400;
@@ -90,7 +92,7 @@ footer .icon-container i:hover{
 .btn-close:hover{
     color: #8ec542;
 }
-.auth-form input{
+.auth-form input,textarea{
     background-color: #272727;
     outline: none;
     border: none;
@@ -103,6 +105,14 @@ footer .icon-container i:hover{
     border-bottom: 2px #785aa6 solid;
 }
 .auth-form input:focus{
+    background: linear-gradient(#272727,#33333300);
+    border-bottom: 2px #785aa6 solid;
+}
+.auth-form textarea:hover{
+    background: linear-gradient(#33333300, #272727);
+    border-bottom: 2px #785aa6 solid;
+}
+.auth-form textarea:focus{
     background: linear-gradient(#272727,#33333300);
     border-bottom: 2px #785aa6 solid;
 }

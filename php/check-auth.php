@@ -14,7 +14,7 @@
         header('Location: /pages/admin_panel.php');
     } else if ($user ["role_id"]=="2"){
         setcookie('admin', $user['email'], time() + 3600, "/");
-        header('Location: /index.html');
+        header('Location: /index.php');
     }
     
     
