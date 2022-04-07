@@ -137,7 +137,7 @@ foreach($lists as $list){
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="" class="d-flex flex-column align-items-start auth-form">
+                        <form action="/php/check-auth.php" class="d-flex flex-column align-items-start auth-form">
                             <label for="email">E-mail:</label>
                             <input type="email" name="email" class="w-100" placeholder="Example@mail.ru">
                             <label for="password">Пароль:</label>
