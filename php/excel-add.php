@@ -15,7 +15,7 @@
         }
         $excelFile = '/table-temp/'.$_FILES['excel']['name'];
         
-        $mysql->query("INSERT INTO `timetables` (`link`, `group_id`) VALUES ('$excelFile', '$group_id');");
+        $mysql->query("INSERT INTO `timetables` (`link`, `group_id`, `date`) VALUES ('$excelFile', '$group_id', '2022-03-01');");
         $mysql->close();
     }
     header('Location: /pages/admin_panel.php');

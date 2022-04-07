@@ -35,7 +35,7 @@ div.table {
 table.timetable{
   width: 100%;
   margin: 0 auto;
-  min-width: 1000px;
+  min-width: 800px;
 }
 .table-responsive{
   overflow-x: hidden;

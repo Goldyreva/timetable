@@ -28,22 +28,19 @@ $result2 = $result2 -> fetch_all();
             <h4 class="pe-3"><?=$result2[0][1] ?> <br> <span><?=$result[0][1] ?></span> </h4>
         </header>
         <section class="timetable w-100">
+
         <?php
 
 $resultTable = $mysql->query("SELECT `link` FROM `timetables` WHERE `group_id` = '$groupId'");
 $resultTable = $resultTable -> fetch_assoc();
-// $resultTable = $resultTable[link];
-// print_r( $resultTable);
-// exit();
+
 if(empty($resultTable)){
   echo '<p color="white"> Расписание не доступно </p>';
 }else{
-
-
 require_once $path = $_SERVER['DOCUMENT_ROOT'] . '/PHPExcel.php';
 
 $excel = PHPExcel_IOFactory::load($_SERVER['DOCUMENT_ROOT'] . $resultTable['link']);
-// print_r($excel) ;
+
 Foreach($excel ->getWorksheetIterator() as $worksheet) {
     $lists[] = $worksheet->toArray();
 }
@@ -55,6 +52,8 @@ function strpos_arr($haystack, $needle) {
     }
     return false;
 }
+
+
  $days = ['', '', '1', '2', '3', '4', '5'];
 
 echo '<br>';
