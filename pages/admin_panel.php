@@ -165,13 +165,14 @@ foreach ($result2 as $dep){
                             </select><br>
 
 
-                            <input class="none" type="file" name="excel">
+                            <input class="" type="file" name="excel">
                         </div>
-
+                    
                 </div>
                 <div class="modal-footer auth-form" >
                     <button type="submit" class="btn auth-btn">Добавить</button>
                 </div>
+            </form>
             </div>
         </div>
     </div>
@@ -209,7 +210,7 @@ foreach ($result2 as $dep){
                             <br>
                             <select class="form-control" name="type">
                                 <option value="CПО">СПО</option>
-                                <option value="Школа">Школа</option>
+                                <option value="СОШ">Школа</option>
                                 <option value="ДС">Дет. сад</option>
                             </select>
 

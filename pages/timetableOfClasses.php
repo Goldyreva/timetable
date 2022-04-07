@@ -21,8 +21,21 @@ $result = $result -> fetch_all();
 $result2 = $mysql->query("SELECT * FROM `departament` WHERE `id` = '$thisDepId'");
 $result2 = $result2 -> fetch_all();
 
+$resultTable = $mysql->query("SELECT `link` FROM `timetables` WHERE `group_id` = '$groupId'");
+$resultTable = $resultTable -> fetch_assoc();
+$resultDepType = $mysql->query("SELECT `type` FROM `departament` WHERE `id` = '$thisDepId'");
+$resultDepType = $resultDepType -> fetch_assoc();
+if($resultDepType['type'] == 'СОШ'){
 ?>
-    <main class="d-flex flex-column align-items-center">
+<main class="d-flex flex-column align-items-center w-100">
+<?php
+}else{
+?>
+<main class="d-flex flex-column align-items-center">
+<?php
+}
+?>
+    
         <header class="d-flex flex-row justify-content-between align-items-center w-100 px-2">
             <a href="/pages/class.php?thisDepId=<?=$_GET['thisDepId']?>" class="nav-a px-3 d-flex align-items-center"> <i class="fa-solid fa-caret-left pe-2 fs-1"></i> Назад</a>
             <h4 class="pe-3"><?=$result2[0][1] ?> <br> <span><?=$result[0][1] ?></span> </h4>
@@ -31,91 +44,393 @@ $result2 = $result2 -> fetch_all();
 
         <?php
 
-$resultTable = $mysql->query("SELECT `link` FROM `timetables` WHERE `group_id` = '$groupId'");
-$resultTable = $resultTable -> fetch_assoc();
+
+
+
 
 if(empty($resultTable)){
   echo '<p color="white"> Расписание не доступно </p>';
 }else{
-require_once $path = $_SERVER['DOCUMENT_ROOT'] . '/PHPExcel.php';
+    require_once $path = $_SERVER['DOCUMENT_ROOT'] . '/PHPExcel.php';
 
-$excel = PHPExcel_IOFactory::load($_SERVER['DOCUMENT_ROOT'] . $resultTable['link']);
+    $excel = PHPExcel_IOFactory::load($_SERVER['DOCUMENT_ROOT'] . $resultTable['link']);
 
-Foreach($excel ->getWorksheetIterator() as $worksheet) {
-    $lists[] = $worksheet->toArray();
-}
-
-function strpos_arr($haystack, $needle) {
-    if(!is_array($needle)) $needle = array($needle);
-    foreach($needle as $what) {
-        if((strpos($haystack, $what))!==false) return true;
+    Foreach($excel ->getWorksheetIterator() as $worksheet) {
+        // $worksheet = $worksheet->getSheet(0);
+        $lists[] = $worksheet->toArray();
     }
-    return false;
-}
+
+    function strpos_arr($haystack, $needle) {
+        if(!is_array($needle)) $needle = array($needle);
+        foreach($needle as $what) {
+            if((strpos($haystack, $what))!==false) return true;
+        }
+        return false;
+    }
 
 
- $days = ['', '', '1', '2', '3', '4', '5'];
+    $days = ['', '', '1', '2', '3', '4', '5'];
 
-echo '<br>';
-foreach($lists as $list){
-    echo '<div class="table-responsive">';
-    echo '<table class="table table-dark m-0 table-striped timetable table-bordered">';
-    ?>
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Пн</th>
-            <th>Вт</th>
-            <th>Ср</th>
-            <th>Чт</th>
-            <th>Пт</th>
-        </tr>
-    </thead>
-    <?php
-    echo '<tbody>';
-    // Перебор строк
-    foreach($list as $row){
-        unset($row[0]);
-      echo '<tr>';
-      
+    echo '<br>';
+    if($resultDepType['type'] == 'СОШ'){
+        foreach($lists as $list){
+            // echo '<div class="table-responsive">';
+            // echo '<table class="table table-dark m-0 table-striped timetable table-bordered">';
+            ?>
 
-        $c = 0;
-        for($i=0; $i<=count($row); $i++){
-            //   $row[$i] = trim($row[$i]);
-            if(empty($row[$i])){
-                $c += 1;
-            }
+            <?php
+            // echo '<tbody>';
+            // Перебор строк
+            foreach($list as $row){
+                // unset($row[0]);
+            // echo '<tr>';
             
-                if($c >= count($row)){
-                    array_splice($row, 0, count($row));
-                }   
-        }
-
-        $month = ['мар', 'фев' , 'апр', 'май', 'янв', 'сен', 'окт', 'ноя', 'дек', 'июн', 'июл', 'авг'];
-        $days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'пн', 'вт', 'ср', 'чт', 'пт'];
-        foreach($row as $r){
-            if(strpos_arr($r, $month) == true){
-                array_splice($row, 0, count($row));
+    
+                $c = 0;
+                for($i=0; $i<=count($row); $i++){
+                    //   $row[$i] = trim($row[$i]);
+                    if(empty($row[$i])){
+                        $c += 1;
+                    }
+                    
+                        if($c >= count($row)){
+                            array_splice($row, 0, count($row));
+                        }   
+                }
+    
+                // $month = ['мар', 'фев' , 'апр', 'май', 'янв', 'сен', 'окт', 'ноя', 'дек', 'июн', 'июл', 'авг'];
+                // $days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'пн', 'вт', 'ср', 'чт', 'пт'];
+                // foreach($row as $r){
+                //     if(strpos_arr($r, $month) == true){
+                //         array_splice($row, 0, count($row));
+                //     }
+                // }
+                // foreach($row as $r){
+                //     if(strpos_arr($r, $days) == true){
+                //         array_splice($row, 0, count($row));
+                //     }
+                // }
+    
+            // Перебор столбцов
+            ?>
+            <!-- <div class="container">
+            <div class="row d-flex justify-content-md-center ">
+                <div class="col-sm-4 col-md-4 col-xl-2 border border-secondary"> -->
+                    <?php
+                        //  echo '<table class="table table-dark m-0 table-striped timetable table-bordered">';
+                        //  echo '<tbody>';
+                        //  echo '<tr>';
+                         foreach($row as $col){
+                             if(empty($col)){
+                                 unset($col);
+                             }
             }
-        }
-        foreach($row as $r){
-            if(strpos_arr($r, $days) == true){
-                array_splice($row, 0, count($row));
+            // echo '</tr>';
+            // echo '</tbody>';
+            // echo '</table>';
+                    ?>
+                </div>
+                <!-- <div class="col-sm-4 col-md-4 col-xl-2 border border-secondary">
+                    <p>пн</p>
+                </div>
+                <div class="col-sm-4 col-md-4 col-xl-2 border border-secondary">
+                    <p>вт</p>
+                </div>
+                <div class="col-sm-4 col-md-4 col-xl-2 border border-secondary">
+                    <p>ср</p>
+                </div>
+                <div class="col-sm-4 col-md-4 col-xl-2 border border-secondary">
+                    <p>чт</p>
+                </div>
+                <div class="col-sm-4 col-md-4 col-xl-2 border border-secondary">
+                    <p>пт</p>
+                </div> -->
+            </div>
+            <?php
+            // foreach($row as $col){
+            //     echo '<td>'.$col.'</td>';
+            // }
+            // echo '</tr>';
             }
+            // echo '</tbody>';
+            // echo '</table>';
+            // echo '</div>';
+        }
+        print_r($list[6][0]);
+?>
+        <div class="container w-100">
+            <div class="row d-flex">
+                <div class="col-sm-12 col-md-12 col-xl-6">
+                    <table class="table table-dark m-0 table-striped timetable table-bordered">
+                        <thead>
+                            <th><?=$list[4][0]?></th>
+                            <th><?=$list[4][1]?></th>
+                            <th></th>
+                            <th><?=$list[4][2]?></th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                <?=$list[6][0]?>
+                                </td>
+                                <td>
+                                <?=$list[6][1]?>
+                                </td>
+                                <td>
+                                <?=$list[6][2]?>
+                                </td>
+                                <td>
+                                <?=$list[6][3]?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                <?=$list[7][0]?>
+                                </td>
+                                <td>
+                                <?=$list[7][1]?>
+                                </td>
+                                <td>
+                                <?=$list[7][2]?>
+                                </td>
+                                <td>
+                                <?=$list[7][3]?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                <?=$list[8][0]?>
+                                </td>
+                                <td>
+                                <?=$list[8][1]?>
+                                </td>
+                                <td>
+                                <?=$list[8][2]?>
+                                </td>
+                                <td>
+                                <?=$list[8][3]?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                <?=$list[9][0]?>
+                                </td>
+                                <td>
+                                <?=$list[9][1]?>
+                                </td>
+                                <td>
+                                <?=$list[9][2]?>
+                                </td>
+                                <td>
+                                <?=$list[9][3]?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                <?=$list[10][0]?>
+                                </td>
+                                <td>
+                                <?=$list[10][1]?>
+                                </td>
+                                <td>
+                                <?=$list[10][2]?>
+                                </td>
+                                <td>
+                                <?=$list[10][3]?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                <?=$list[11][0]?>
+                                </td>
+                                <td>
+                                <?=$list[11][1]?>
+                                </td>
+                                <td>
+                                <?=$list[11][2]?>
+                                </td>
+                                <td>
+                                <?=$list[11][3]?>
+                                </td>
+                            </tr>
+                        </tbody>
+                </table>
+                </div>
+                <div class="col-sm-12 col-md-12 col-xl-6">
+                    <table class="table table-dark m-0 table-striped timetable table-bordered">
+                        <thead>
+                            <th><?=$list[4][4]?></th>
+                            <th><?=$list[4][5]?></th>
+                            <th></th>
+                            <th><?=$list[4][6]?></th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                <?=$list[6][4]?>
+                                </td>
+                                <td>
+                                <?=$list[6][5]?>
+                                </td>
+                                <td>
+                                <?=$list[6][6]?>
+                                </td>
+                                <td>
+                                <?=$list[6][7]?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                <?=$list[7][4]?>
+                                </td>
+                                <td>
+                                <?=$list[7][5]?>
+                                </td>
+                                <td>
+                                <?=$list[7][6]?>
+                                </td>
+                                <td>
+                                <?=$list[7][7]?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                <?=$list[8][4]?>
+                                </td>
+                                <td>
+                                <?=$list[8][5]?>
+                                </td>
+                                <td>
+                                <?=$list[8][6]?>
+                                </td>
+                                <td>
+                                <?=$list[8][7]?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                <?=$list[9][4]?>
+                                </td>
+                                <td>
+                                <?=$list[9][5]?>
+                                </td>
+                                <td>
+                                <?=$list[9][6]?>
+                                </td>
+                                <td>
+                                <?=$list[9][7]?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                <?=$list[10][4]?>
+                                </td>
+                                <td>
+                                <?=$list[10][5]?>
+                                </td>
+                                <td>
+                                <?=$list[10][6]?>
+                                </td>
+                                <td>
+                                <?=$list[10][7]?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                <?=$list[11][4]?>
+                                </td>
+                                <td>
+                                <?=$list[11][5]?>
+                                </td>
+                                <td>
+                                <?=$list[11][2]?>
+                                </td>
+                                <td>
+                                <?=$list[11][3]?>
+                                </td>
+                            </tr>
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<?php
+    }else if($resultDepType['type'] == 'СПО'){
+
+        foreach($lists as $list){
+         
+            echo '<table class="table table-dark m-0 table-striped timetable table-bordered">';
+            ?>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Пн</th>
+                    <th>Вт</th>
+                    <th>Ср</th>
+                    <th>Чт</th>
+                    <th>Пт</th>
+                </tr>
+            </thead>
+            <?php
+            echo '<tbody>';
+            // Перебор строк
+            foreach($list as $row){
+                unset($row[0]);
+            echo '<tr>';
+            
+    
+                $c = 0;
+                for($i=0; $i<=count($row); $i++){
+                    //   $row[$i] = trim($row[$i]);
+                    if(empty($row[$i])){
+                        $c += 1;
+                    }
+                    
+                        if($c >= count($row)){
+                            array_splice($row, 0, count($row));
+                        }   
+                }
+    
+                $month = ['мар', 'фев' , 'апр', 'май', 'янв', 'сен', 'окт', 'ноя', 'дек', 'июн', 'июл', 'авг'];
+                $days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'пн', 'вт', 'ср', 'чт', 'пт'];
+                $trigerWords = ', Факультет';
+                foreach($row as $r){
+                    if(strpos_arr($r, $month) == true){
+                        array_splice($row, 0, count($row));
+                    }
+                }
+                foreach($row as $r){
+                    if(strpos_arr($r, $days) == true){
+                        array_splice($row, 0, count($row));
+                    }
+                }
+    
+            // Перебор столбцов
+            foreach($row as $col){
+                if(strpos_arr($col, $trigerWords) == true){
+                    // $position = mb_strrpos($col, $trigerWords);
+                    // echo $position;
+                    // $subinput = mb_substr($col, 0, 14);
+                    $col = strstr($col, $trigerWords, true);
+                    // $col =  str_replace($subinput, '', $col);
+                    
+                }
+                echo '<td>'.$col.'</td>';
+            }
+            echo '</tr>';
+            }
+            echo '</tbody>';
+            echo '</table>';
+
         }
 
-      // Перебор столбцов
-      foreach($row as $col){
-        echo '<td>'.$col.'</td>';
-    }
-    echo '</tr>';
-    }
-    echo '</tbody>';
-    echo '</table>';
-    echo '</div>';
-   }
+    
+    }else{
+        // echo 'Дет сад';
+    } 
 
-  }
+
+}
 ?>
 
 

@@ -33,9 +33,9 @@ div.table {
     flex-direction: column;
   }  */
 table.timetable{
-  width: 100%;
+  /* width: 100%; */
   margin: 0 auto;
-  min-width: 800px;
+  /* min-width: 800px; */
 }
 .table-responsive{
   overflow-x: hidden;

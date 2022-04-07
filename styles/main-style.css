@@ -55,6 +55,7 @@ main{
     text-decoration: none;
     /* min-width: 400px; */
     border: 4px dashed white;
+    border-radius: 10px;
     text-align: center;
     padding: 15px 0;
     margin: 15px;
