@@ -441,7 +441,23 @@ if(empty($resultTable)){
         <div class="icon-container"></div>
         <h1>Первый Московский Образовательный Комплекс</h1>
         <div class="icon-container">
+        <?php
+            if($_COOKIE['superadmin'] != ""){?>
+            <form action="/php/exit.php">
+                <button type="submit" class="btn btn-secondary">Выход</button>
+            </form>
+            <?php
+            }elseif($_COOKIE['admin'] != ""){
+                ?>    
+            <form action="/php/exit.php">
+                <button type="submit" class="btn btn-secondary">Выход</button>
+            </form>
+            <?php
+            }else{?>
             <a href="" type="button" class="" data-bs-toggle="modal" data-bs-target="#auth"><i class="fa-solid fa-user-tie"></i></a>
+            <?php
+            }
+            ?>
   
             <!-- Поп - ап окно авторизации -->
             <div class="modal fade" id="auth" tabindex="-1" aria-labelledby="authLabel" aria-hidden="true">

@@ -16,6 +16,41 @@
     <header class="d-flex flex-row justify-content-between align-items-center w-75 px-2 mx-auto">
         <a href="/pages/main.php?thisDepId=<?=$_GET['thisDepId']?>" class="nav-a px-3 d-flex align-items-center"> <i
                 class="fa-solid fa-caret-left pe-2 fs-1"></i> Назад</a>
+                <?php
+            if($_COOKIE['admin'] != ""){
+                ?>    
+    <div class="d-flex align-items-end">
+    <button type="button" class="btn btn-success d-flex align-items-center" class="btn btn-primary btn-lg btn-block " class=""
+                data-bs-toggle="modal" data-bs-target="#add">Добавить объявления</button>
+                <div class="modal fade" id="add" tabindex="-1" aria-labelledby="authLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <!-- Добавление объявлений -->
+                            <h5 class="modal-title" id="authLabel">Добавить объявления</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body ">
+                            <form action="/php/check_add.php" method="POST" class="d-flex flex-column align-items-start auth-form">
+                                <label for="name">Название:</label>
+                                <input type="name" name="name" class="w-100 mb-3">
+                                <label for="">Описание</label>
+                                <textarea name="description" id="" cols="" rows="" class="w-100 mb-3"></textarea>
+                                <input class="form-control" type="file" name="img">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn auth-btn">Сохранить</button>
+                        </div>
+                    </div> </form>
+                </div>
+            </div>
+   </div>
+   <?php
+            }else{?>
+            <?php
+            }
+            ?>
         <h4 class="pe-3">ОБЪЯВЛЕНИЯ</h4>
     </header>
 
@@ -41,9 +76,14 @@
                 </div>
 
             </div>
+            <div class="d-flex justify-content-between flex-row-reverse">
             <div>
                 <p>06.04.2022</p>
             </div>
+            <div>
+            <button type="button" class="btn btn-danger">Удалить объявления</button>
+            </div>
+        </div>
             <div class="d-flex flex-column align-items-center">
                 <div>
                     <img src="/images/add_3.jpg" class="rounded mx-25 d-block" alt="">
@@ -64,45 +104,39 @@
                 </div>
 
             </div>
-            <div class="d-flex align-items-end">
+            <div class="d-flex justify-content-between flex-row-reverse">
+            <div>
                 <p>06.04.2022</p>
             </div>
+            <div>
+            <button type="button" class="btn btn-danger">Удалить объявления</button>
+            </div>
+        </div>
         </div>
 
     </div>
-    <div class="d-flex align-items-end">
-    <button type="button" class="btn btn-success d-flex align-items-center" class="btn btn-primary btn-lg btn-block " class=""
-                data-bs-toggle="modal" data-bs-target="#add">Добавить объявления</button>
-                <div class="modal fade" id="add" tabindex="-1" aria-labelledby="authLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="authLabel">Добавить объявления</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body ">
-                            <form action="" class="d-flex flex-column align-items-start auth-form">
-                                <label for="name">Название:</label>
-                                <input type="text"name="name" class="w-100 mb-3">
-                                <label for="">Описание</label>
-                                <textarea name="" id="" cols="" rows="" class="w-100 mb-3"></textarea>
-                                <input class="form-control" type="file">
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn auth-btn">Сохранить</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-   </div>
+    
     <footer class="d-flex flex-row justify-content-around py-5">
         <div class="icon-container"></div>
         <h1>Первый Московский Образовательный Комплекс</h1>
         <div class="icon-container">
-            <a href="" type="button" class="" data-bs-toggle="modal" data-bs-target="#auth"><i
-                    class="fa-solid fa-user-tie"></i></a>
+        <?php
+            if($_COOKIE['superadmin'] != ""){?>
+            <form action="/php/exit.php">
+                <button type="submit" class="btn btn-secondary">Выход</button>
+            </form>
+            <?php
+            }elseif($_COOKIE['admin'] != ""){
+                ?>    
+            <form action="/php/exit.php">
+                <button type="submit" class="btn btn-secondary">Выход</button>
+            </form>
+            <?php
+            }else{?>
+            <a href="" type="button" class="" data-bs-toggle="modal" data-bs-target="#auth"><i class="fa-solid fa-user-tie"></i></a>
+            <?php
+            }
+            ?>
 
             <!-- Поп - ап окно авторизации -->
             <div class="modal fade" id="auth" tabindex="-1" aria-labelledby="authLabel" aria-hidden="true">
@@ -114,7 +148,7 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="/php/check-auth.php" class="d-flex flex-column align-items-start auth-form">
+                            <form action="/php/check-auth.php" method="$_POST" class="d-flex flex-column align-items-start auth-form">
                                 <label for="email">E-mail:</label>
                                 <input type="email" name="email" class="w-100" placeholder="Example@mail.ru">
                                 <label for="password">Пароль:</label>

@@ -37,7 +37,23 @@
         <div class="icon-container"></div>
         <h1>Первый Московский Образовательный Комплекс</h1>
         <div class="icon-container">
+        <?php
+            if($_COOKIE['superadmin'] != ""){?>
+            <form action="/php/exit.php">
+                <button type="submit" class="btn btn-secondary">Выход</button>
+            </form>
+            <?php
+            }elseif($_COOKIE['admin'] != ""){
+                ?>    
+            <form action="/php/exit.php">
+                <button type="submit" class="btn btn-secondary">Выход</button>
+            </form>
+            <?php
+            }else{?>
             <a href="" type="button" class="" data-bs-toggle="modal" data-bs-target="#auth"><i class="fa-solid fa-user-tie"></i></a>
+            <?php
+            }
+            ?>
   
             <!-- Поп - ап окно авторизации -->
             <div class="modal fade" id="auth" tabindex="-1" aria-labelledby="authLabel" aria-hidden="true">
@@ -53,13 +69,12 @@
                             <input type="email" name="email" class="w-100" placeholder="Example@mail.ru">
                             <label for="password">Пароль:</label>
                             <input type="password" name="password" class="w-100" placeholder="********">
-                        </form>
+                        
                     </div>
                     <div class="modal-footer d-flex justify-content-between">
-                        <a href="/pages/admin_panel.php">панель администратора</a>
-                    <button type="button" class="btn auth-btn">Войти</button>
+                    <button type="submit" class="btn auth-btn">Войти</button>
                     </div>
-                </div>
+                </div></form>
                 </div>
             </div>
             <!-- Поп - ап окно авторизации -->
